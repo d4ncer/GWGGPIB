@@ -1,0 +1,123 @@
+{{left_sidebar_enabled=right_sidebar_enabled=False}}
+{{extend 'layout.html'}}
+<div id="run_time" style="width:900px; height:20px; padding-top:-5px; padding-bottom:20px;"></div>
+{{=form}}
+<h1>Results</h1>
+{{=records}}
+
+<script>
+jQuery(document).ready(function(){
+
+    // Conditional form element handling based on run type
+
+    jQuery("#gpib_frequency_start__row").hide();
+    jQuery("#gpib_frequency_range__row").hide();
+    jQuery("#gpib_source_level__row").hide();
+    jQuery("#gpib_source_offset__row").hide();
+    jQuery("#gpib_sweep_rate__row").hide();
+    jQuery("#gpib_calculate_sweep_rate__row").hide();
+    jQuery("#gpib_sweep_up__row").hide();
+    jQuery("#gpib_sweep_down__row").hide();
+    jQuery("#gpib_multiple_runs__row").hide();
+    jQuery("#gpib_number_runs__row").hide();
+
+    jQuery("#gpib_run_type").change(function() {
+        var rval = jQuery(this).val();
+        if (rval == "PSD") {
+            jQuery("#gpib_source_level__row").hide();
+            jQuery("#gpib_source_offset__row").hide();
+            jQuery("#gpib_sweep_rate__row").hide();
+            jQuery("#gpib_calculate_sweep_rate__row").hide();
+            jQuery("#gpib_sweep_up__row").hide();
+            jQuery("#gpib_sweep_down__row").hide();
+            jQuery("#gpib_multiple_runs__row").hide();
+            jQuery("#gpib_number_runs__row").hide();
+            jQuery("#gpib_frequency_start__row").show();
+            jQuery("#gpib_frequency_range__row").show();
+            }
+        else if (rval == "Sweep") {
+            jQuery("#gpib_frequency_start__row").show();
+            jQuery("#gpib_frequency_range__row").show();
+            jQuery("#gpib_source_level__row").show();
+            jQuery("#gpib_source_offset__row").show()
+            jQuery("#gpib_sweep_rate__row").show();
+            jQuery("#gpib_calculate_sweep_rate__row").show();
+            jQuery("#gpib_sweep_up__row").show();
+            jQuery("#gpib_sweep_down__row").show();
+            jQuery("#gpib_multiple_runs__row").show();
+            }
+        else {
+            jQuery("#gpib_source_level__row").hide();
+            jQuery("#gpib_source_offset__row").hide();
+            jQuery("#gpib_sweep_rate__row").hide();
+            jQuery("#gpib_calculate_sweep_rate__row").hide();
+            jQuery("#gpib_sweep_up__row").hide();
+            jQuery("#gpib_sweep_down__row").hide();
+            jQuery("#gpib_frequency_start__row").hide();
+            jQuery("#gpib_frequency_range__row").hide();
+            jQuery("#gpib_multiple_runs__row").hide();
+            jQuery("#gpib_number_runs__row").hide();
+            }    
+    });
+
+    jQuery("#gpib_multiple_runs").change(function() {
+        if (jQuery(this).attr('checked')) {
+            jQuery("#gpib_number_runs__row").show();
+        }
+        else {
+            jQuery("#gpib_number_runs__row").hide();
+        }
+    });
+    
+    // Two functions to ensure that only the sweep arrows control the
+    // sweep rate input field. 
+
+    jQuery("#gpib_sweep_rate").click(function() {
+        alert("Use sweep up and down to control sweep rate");
+        jQuery(this).blur();
+    });
+
+    jQuery("#gpib_sweep_rate").keypress(function() {
+        alert("Use sweep up and down to control sweep rate");
+        jQuery(this).empty();
+        jQuery(this).blur();
+     });   
+
+    jQuery("#gpib_calculate_sweep_rate").click(function() {
+        if ((jQuery("#gpib_frequency_start").val().length > 0) && (jQuery("#gpib_frequency_range").val().length > 0) && (jQuery("#gpib_device").val().length > 0)) {
+            ajax('calc_sweep_func',['frequency_range','frequency_start','device'],':eval'); 
+            }          
+        else {    
+            alert('Please fill out frequency range and start values');
+            }
+        });    
+            
+     jQuery("#gpib_sweep_up").click(function() {
+         if ((jQuery("#gpib_sweep_rate").val().length > 0) && (jQuery("#gpib_device").val().length > 0)) {
+             ajax('sweep_up_func',['sweep_rate','device'],':eval');
+             jQuery("#gpib_sweep_rate").blur();
+             }
+         else {
+             alert('Please calculate sweep rate first');
+             }
+         });
+         
+      jQuery("#gpib_sweep_down").click(function() {
+         if ((jQuery("#gpib_sweep_rate").val().length > 0) && (jQuery("#gpib_device").val().length > 0)) {
+             ajax('sweep_down_func',['sweep_rate','device'],':eval');
+             jQuery("#gpib_sweep_rate").blur();
+             }
+         else {
+             alert('Please calculate sweep rate first');
+             }
+         });          
+      
+      jQuery("#gpib_sweep_rate").blur(function () {
+         if (jQuery("#gpib_sweep_rate").val().length > 0) {
+             ajax('calc_sweep_time',['frequency_range','sweep_rate','number_runs','multiple_runs'], ':eval');
+         }
+      });
+});    
+
+
+</script>

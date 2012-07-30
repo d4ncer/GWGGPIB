@@ -1,0 +1,133 @@
+timestamp: 2012-07-11T10:29:40.633585
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2012-07-11T10:29:40.637680
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-07-11T10:29:40.640281
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2012-07-11T10:29:40.643263
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2012-07-11T10:29:40.646262
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2012-07-11T10:29:40.649216
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2012-07-30T16:02:26.767697
+CREATE TABLE gpib(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    device CHAR(512),
+    run_type CHAR(512),
+    multiple_runs CHAR(1),
+    number_runs INTEGER,
+    frequency_start CHAR(512),
+    frequency_range CHAR(512),
+    source_level CHAR(512),
+    source_offset CHAR(512),
+    sweep_rate CHAR(512),
+    calculate_sweep_rate CHAR(512),
+    sweep_up CHAR(512),
+    sweep_down CHAR(512)
+);
+success!
+timestamp: 2012-07-30T16:02:26.778578
+CREATE TABLE results(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time TIMESTAMP,
+    device CHAR(512),
+    run_type CHAR(512),
+    start_frequency CHAR(512),
+    frequency_range CHAR(512),
+    source_level CHAR(512),
+    source_offset CHAR(512),
+    sweep_rate CHAR(512)
+);
+success!
+timestamp: 2012-07-30T16:02:26.780841
+CREATE TABLE data(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    x CHAR(512),
+    yr CHAR(512),
+    ya CHAR(512),
+    plot_link CHAR(512)
+);
+success!
+timestamp: 2012-07-30T16:02:52.105934
+CREATE TABLE gpib(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    device CHAR(512),
+    run_type CHAR(512),
+    multiple_runs CHAR(1),
+    number_runs INTEGER,
+    frequency_start CHAR(512),
+    frequency_range CHAR(512),
+    source_level CHAR(512),
+    source_offset CHAR(512),
+    sweep_rate CHAR(512),
+    calculate_sweep_rate CHAR(512),
+    sweep_up CHAR(512),
+    sweep_down CHAR(512)
+);
+success!
+timestamp: 2012-07-30T16:02:52.112659
+CREATE TABLE results(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time TIMESTAMP,
+    device CHAR(512),
+    run_type CHAR(512),
+    start_frequency CHAR(512),
+    frequency_range CHAR(512),
+    source_level CHAR(512),
+    source_offset CHAR(512),
+    sweep_rate CHAR(512)
+);
+success!
+timestamp: 2012-07-30T16:02:52.115342
+CREATE TABLE data(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    x CHAR(512),
+    yr CHAR(512),
+    ya CHAR(512),
+    plot_link CHAR(512)
+);
+success!

@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+# this file is released under public domain and you can use without limitations
+
+#########################################################################
+## Customize your APP title, subtitle and menus here
+#########################################################################
+
+response.title = ' '.join(word.capitalize() for word in request.application.split('_'))
+response.subtitle = T('HWSGWG Spectrum Analyzer Remote Manipulation')
+
+## read more at http://dev.w3.org/html5/markup/meta.name.html
+response.meta.author = 'Steve Penn <steve@gravity.hws.edu>'
+response.meta.description = 'App to remotely control and manipulate HP 3562A Spectrum Analyzers'
+response.meta.keywords = 'web2py, python, physics, ligo, hobart, william smith, hws, coating'
+response.meta.generator = 'Web2py Web Framework'
+response.meta.copyright = 'HWSGWG Copyright 2012'
+
+## your http://google.com/analytics id
+response.google_analytics_id = None
+
+#########################################################################
+## this is the main application menu add/remove items as required
+#########################################################################
+
+response.menu = [
+    (T('Home'), False, 'https://gravity.hws.edu', [])
+    ]
